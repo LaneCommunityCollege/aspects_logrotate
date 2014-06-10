@@ -1,0 +1,17 @@
+---
+# defaults file for aspects_logrotate
+
+aspects_logrotate_configs: {}
+#  syslog: |
+#    /var/log/syslog
+#    {
+#        rotate 7
+#        daily
+#        missingok
+#        notifempty
+#        delaycompress
+#        compress
+#        postrotate
+#            reload rsyslog >/dev/null 2>&1 || true
+#        endscript
+#    }
