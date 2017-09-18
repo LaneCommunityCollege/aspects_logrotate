@@ -1,16 +1,20 @@
-#aspects_logrotate
+# aspects_logrotate
 
 Create logrotate configuration files in /etc/logrotate.d/.
 
-##Requirements
+## Requirements
 
 Set ```hash_behaviour=merge``` in your ansible.cfg file.
 
-##Role Variables
-###aspects_logrotate_configs
+## Role Variables
+### aspects_logrotate_configs
 A dictionary containing explict rules.
 
-#Example Playbook
+Each rule is saved in ```/etc/logrotate.d/```. The file name is the same as the dictionary key. So, ```aspects_logrotate_configs.apache``` would be saved in ```/etc/logrotate.d/apache```.
+
+That means that you can overwrite any rules in ```/etc/logrotate.d``` simply by setting the key to the filename.
+
+# Example Playbook
 Not that it's a good idea to overwrite the default syslog configuration, but it makes a good example.
 
     - hosts: servers
@@ -32,6 +36,6 @@ Not that it's a good idea to overwrite the default syslog configuration, but it 
                 endscript
             }
 
-#License
+# License
 
 MIT
