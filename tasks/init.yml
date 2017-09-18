@@ -1,0 +1,12 @@
+---
+# tasks file for aspects_logrotate
+- name: Set logrotate rules
+  template:
+    src: "logrotaterules.j2"
+    dest: "/etc/logrotate.d/{{ item.key }}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  with_dict: "{{ aspects_logrotate_configs }}"
+  tags:
+    - aspects_logrotate

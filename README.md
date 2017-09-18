@@ -7,6 +7,9 @@ Create logrotate configuration files in /etc/logrotate.d/.
 Set ```hash_behaviour=merge``` in your ansible.cfg file.
 
 ## Role Variables
+### aspects_logrotate_enabled
+Enable or disable this role. Default is False/Disabled. Set to True in order to enable the role.
+
 ### aspects_logrotate_configs
 A dictionary containing explict rules.
 

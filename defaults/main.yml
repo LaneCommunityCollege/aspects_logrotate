@@ -1,6 +1,6 @@
 ---
 # defaults file for aspects_logrotate
-
+aspects_logrotate_enabled: False
 aspects_logrotate_configs: {}
 #  syslog: |
 #    /var/log/syslog
