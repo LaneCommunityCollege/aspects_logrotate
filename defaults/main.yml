@@ -1,6 +1,11 @@
 ---
 # defaults file for aspects_logrotate
 aspects_logrotate_enabled: False
+aspects_logrotate_packages:
+  logrotate:
+    state: "present"
+    Debian: "logrotate"
+    RedHat: "logrotate"
 aspects_logrotate_configs: {}
 #  syslog: |
 #    /var/log/syslog
@@ -15,3 +20,50 @@ aspects_logrotate_configs: {}
 #            reload rsyslog >/dev/null 2>&1 || true
 #        endscript
 #    }
+
+aspects_logrotate_conf_file:
+  000timeperiod:
+    enabled: True
+    value: "weekly"
+  001suusergroup:
+    enabled: True
+    value: ""
+    Debian:
+      enabled: True
+      value: "su root syslog"
+    RedHat:
+      enabled: False
+  002rotate:
+    enabled: True
+    value: "rotate 4"
+  003create:
+    enabled: True
+    value: "create"
+  004dateext:
+    enabled: True
+    value: "dateext"
+  005compress:
+    enabled: False
+    value: "compress"
+  006includedotd:
+    enabled: True
+    value: "include /etc/logrotate.d"
+  007varlogwtmp:
+    enabled: True
+    value: |
+      /var/log/wtmp {
+        missingok
+        monthly
+        create 0664 root utmp
+            minsize 1M
+        rotate 1
+      }
+  008varlogbtmp:
+    enabled: True
+    value: |
+      /var/log/btmp {
+        missingok
+        monthly
+        create 0600 root utmp
+        rotate 1
+      }

@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+{% for item in aspects_logrotate_conf_file|dictsort(true,'key') %}
+{% if aspects_logrotate_conf_file[item[0]].enabled %}
+{% if aspects_logrotate_conf_file[item[0]].Debian is defined and ansible_os_family == "Debian" %}
+{% if aspects_logrotate_conf_file[item[0]].Debian.enabled is defined and aspects_logrotate_conf_file[item[0]].Debian.enabled %}
+{{ aspects_logrotate_conf_file[item[0]].Debian.value }}
+{% endif %}
+{% elif aspects_logrotate_conf_file[item[0]].RedHat is defined and ansible_os_family == "RedHat" %}
+{% if aspects_logrotate_conf_file[item[0]].RedHat.enabled is defined and aspects_logrotate_conf_file[item[0]].RedHat.enabled %}
+{{ aspects_logrotate_conf_file[item[0]].RedHat.value }}
+{% endif %}
+{% else %}
+{{ aspects_logrotate_conf_file[item[0]].value }}
+{% endif %}
+{% endif %}
+{% endfor %}

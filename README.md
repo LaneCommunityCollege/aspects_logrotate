@@ -17,6 +17,31 @@ Each rule is saved in ```/etc/logrotate.d/```. The file name is the same as the 
 
 That means that you can overwrite any rules in ```/etc/logrotate.d``` simply by setting the key to the filename.
 
+### aspects_logrotate_conf_file
+A dictionary of values to place in the ```/etc/logrotate.conf``` file.
+
+Dictionary keys should be prefixed with a number to allow proper sorting.
+
+Each item can have a per ```ansible_os_family``` override. For example, if you want to use the dateext option on CentOS 7 but not on Ubuntu, you can do something like:
+
+```
+aspects_logrotate_conf_file:
+  004dateext:
+    enabled: True
+    value: ""
+    Debian:
+      enabled: False
+    RedHat:
+      enabled: True
+      value: "dateext"
+```
+
+If there is no ```ansible_os_family``` override, the default ```aspects_logrotate_conf_file.<key>.value``` will be used.
+
+See defaults/main.yml for examples and the defaults set. The defaults were created by comparing CentOS 7, Ubuntu Trusty and Xenial, and Debian Stretch Vagrant vm's default ```/etc/logroate.conf``` files.
+
+The Vagrantfile had vm.box set to bento/ubuntu-16.04, ubuntu/trusty64, centos/7, and debian/stretch64.
+
 # Example Playbook
 Not that it's a good idea to overwrite the default syslog configuration, but it makes a good example.
 

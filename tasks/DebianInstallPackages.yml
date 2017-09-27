@@ -1,0 +1,16 @@
+---
+- name: Debian - Install logrotate packages with apt
+  when:
+    (ansible_pkg_mgr == "apt") and
+    item.value.state != 'default' and
+    item.value.state != 'purged' and
+    item.value.Debian is defined
+  apt:
+    pkg: "{{ item.value.Debian }}"
+    state: "{{ item.value.state }}"
+    update_cache: "yes"
+    cache_valid_time: "86400"
+  with_dict: "{{ aspects_logrotate_packages }}"
+  tags:
+    - aspects_logrotate
+    - aspects_logrotate_package_install

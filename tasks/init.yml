@@ -1,5 +1,19 @@
 ---
-# tasks file for aspects_logrotate
+- name: include appropriate package install file.
+  include: "{{ ansible_os_family }}InstallPackages.yml"
+  tags:
+    - aspects_logrotate
+
+- name: Set /etc/logrotate.conf
+  template:
+    src: "logrotate.conf.j2"
+    dest: "/etc/logrotate.conf"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  tags:
+    - aspects_logrotate
+
 - name: Set logrotate rules
   template:
     src: "logrotaterules.j2"
