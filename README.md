@@ -3,6 +3,7 @@
 Create logrotate configuration files in /etc/logrotate.d/.
 
 ## Requirements
+`logrotate` needs to be installed on your node.
 
 Set ```hash_behaviour=merge``` in your ansible.cfg file.
 
@@ -49,6 +50,7 @@ Not that it's a good idea to overwrite the default syslog configuration, but it 
       roles:
          - aspects_logrotate
       vars:
+        aspects_logrotate_enabled: True
         aspects_logrotate_configs:
           syslog: |
             /var/log/syslog

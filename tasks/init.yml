@@ -1,9 +1,4 @@
 ---
-- name: include appropriate package install file.
-  include: "{{ ansible_os_family }}InstallPackages.yml"
-  tags:
-    - aspects_logrotate
-
 - name: Set /etc/logrotate.conf
   template:
     src: "logrotate.conf.j2"
