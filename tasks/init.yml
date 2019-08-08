@@ -16,6 +16,6 @@
     owner: "root"
     group: "root"
     mode: "0644"
-  with_dict: "{{ aspects_logrotate_configs }}"
+  loop: "{{ aspects_logrotate_configs|dict2items }}"
   tags:
     - aspects_logrotate
