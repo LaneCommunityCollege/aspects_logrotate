@@ -1,16 +1,51 @@
 # {{ ansible_managed }}
 {% for item in aspects_logrotate_conf_file|dictsort(true,'key') %}
 {% if aspects_logrotate_conf_file[item[0]].enabled %}
-{% if aspects_logrotate_conf_file[item[0]].Debian is defined and ansible_os_family == "Debian" %}
-{% if aspects_logrotate_conf_file[item[0]].Debian.enabled is defined and aspects_logrotate_conf_file[item[0]].Debian.enabled %}
-{{ aspects_logrotate_conf_file[item[0]].Debian.value }}
-{% endif %}
-{% elif aspects_logrotate_conf_file[item[0]].RedHat is defined and ansible_os_family == "RedHat" %}
-{% if aspects_logrotate_conf_file[item[0]].RedHat.enabled is defined and aspects_logrotate_conf_file[item[0]].RedHat.enabled %}
-{{ aspects_logrotate_conf_file[item[0]].RedHat.value }}
-{% endif %}
-{% else %}
-{{ aspects_logrotate_conf_file[item[0]].value }}
+
+{% if
+    (ansible_lsb is defined and ansible_lsb.codename is defined and ansible_lsb.id is defined)
+    and (ansible_lsb.codename == "xenial" and (ansible_lsb.id == "Ubuntu" or ansible_lsb.id == "Pop"))
+    and (aspects_logrotate_conf_file[item[0]].Ubuntu is defined and aspects_logrotate_conf_file[item[0]].Ubuntu.1604 is defined)
+-%}
+{{ aspects_logrotate_conf_file[item[0]].Ubuntu.1604 }}
+{% elif
+    (ansible_lsb is defined and ansible_lsb.codename is defined and ansible_lsb.id is defined)
+    and (ansible_lsb.codename == "bionic" and (ansible_lsb.id == "Ubuntu" or ansible_lsb.id == "Pop"))
+    and (aspects_logrotate_conf_file[item[0]].Ubuntu is defined and aspects_logrotate_conf_file[item[0]].Ubuntu.1804 is defined)
+-%}
+{{ aspects_logrotate_conf_file[item[0]].Ubuntu.1804 }}
+{% elif
+    (ansible_lsb is defined and ansible_lsb.codename is defined and ansible_lsb.id is defined)
+    and (ansible_lsb.codename == "focal" and (ansible_lsb.id == "Ubuntu" or ansible_lsb.id == "Pop"))
+    and (aspects_logrotate_conf_file[item[0]].Ubuntu is defined and aspects_logrotate_conf_file[item[0]].Ubuntu.2004 is defined)
+-%}
+{{ aspects_logrotate_conf_file[item[0]].Ubuntu.2004 }}
+{% elif
+    (ansible_lsb is defined and ansible_lsb.codename is defined and ansible_lsb.id is defined)
+    and (ansible_lsb.codename == "stretch" and ansible_lsb.id == "Debian")
+    and (aspects_logrotate_conf_file[item[0]].Debian is defined and aspects_logrotate_conf_file[item[0]].Debian.9 is defined)
+-%}
+{{ aspects_logrotate_conf_file[item[0]].Debian.9 }}
+{% elif
+    (ansible_lsb is defined and ansible_lsb.codename is defined and ansible_lsb.id is defined)
+    and (ansible_lsb.codename == "buster" and ansible_lsb.id == "Debian")
+    and (aspects_logrotate_conf_file[item[0]].Debian is defined and aspects_logrotate_conf_file[item[0]].Debian.10 is defined)
+-%}
+{{ aspects_logrotate_conf_file[item[0]].Debian.10 }}
+{% elif
+    (ansible_distribution is defined and ansible_distribution_major_version is defined)
+    and (ansible_distribution == "CentOS" and ansible_distribution_major_version == "7")
+    and (aspects_logrotate_conf_file[item[0]].CentOS is defined and aspects_logrotate_conf_file[item[0]].CentOS.7 is defined)
+-%}
+{{ aspects_logrotate_conf_file[item[0]].CentOS.7 }}
+{% elif
+    (ansible_distribution is defined and ansible_distribution_major_version is defined)
+    and (ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "7")
+    and (aspects_logrotate_conf_file[item[0]].OracleLinux is defined and aspects_logrotate_conf_file[item[0]].OracleLinux.7 is defined)
+-%}
+{{ aspects_logrotate_conf_file[item[0]].OracleLinux.7 }}
+{% elif aspects_logrotate_conf_file[item[0]].default is defined -%}
+{{ aspects_logrotate_conf_file[item[0]].default }}
 {% endif %}
 {% endif %}
 {% endfor %}

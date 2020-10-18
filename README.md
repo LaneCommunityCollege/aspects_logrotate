@@ -1,6 +1,5 @@
 # aspects_logrotate
-
-Create logrotate configuration files in /etc/logrotate.d/.
+Manage logrotate configuration in `/etc/logrotate.conf` and `/etc/logrotate.d`.
 
 ## Requirements
 `logrotate` needs to be installed on your node.
@@ -23,48 +22,41 @@ A dictionary of values to place in the ```/etc/logrotate.conf``` file.
 
 Dictionary keys should be prefixed with a number to allow proper sorting.
 
-Each item can have a per ```ansible_os_family``` override. For example, if you want to use the dateext option on CentOS 7 but not on Ubuntu, you can do something like:
-
-```
-aspects_logrotate_conf_file:
-  004dateext:
-    enabled: True
-    value: ""
-    Debian:
-      enabled: False
-    RedHat:
-      enabled: True
-      value: "dateext"
-```
-
-If there is no ```ansible_os_family``` override, the default ```aspects_logrotate_conf_file.<key>.value``` will be used.
-
-See defaults/main.yml for examples and the defaults set. The defaults were created by comparing CentOS 7, Ubuntu Trusty and Xenial, and Debian Stretch Vagrant vm's default ```/etc/logroate.conf``` files.
-
-The Vagrantfile had vm.box set to bento/ubuntu-16.04, ubuntu/trusty64, centos/7, and debian/stretch64.
+See [defaults/main.yml](defaults/main.yml) for examples. You can set a default value, or per
+distro and major version.
 
 # Example Playbook
 Not that it's a good idea to overwrite the default syslog configuration, but it makes a good example.
-
-    - hosts: servers
-      roles:
-         - aspects_logrotate
-      vars:
-        aspects_logrotate_enabled: True
-        aspects_logrotate_configs:
-          syslog: |
-            /var/log/syslog
-            {
-                rotate 7
-                daily
-                missingok
-                notifempty
-                delaycompress
-                compress
-                postrotate
-                    reload rsyslog >/dev/null 2>&1 || true
-                endscript
-            }
+```yaml
+- hosts: servers
+  roles:
+     - aspects_logrotate
+  vars:
+    aspects_logrotate_enabled: True
+    aspects_logrotate_conf_file:  
+      001suusergroup:
+        enabled: True
+        Ubuntu:
+          1604: "su root syslog"
+          1804: "su root syslog"
+          2004: "su root adm"
+        CentOS:
+          7: "su root loggroup"
+    aspects_logrotate_configs:
+      syslog: |
+        /var/log/syslog
+        {
+            rotate 7
+            daily
+            missingok
+            notifempty
+            delaycompress
+            compress
+            postrotate
+                reload rsyslog >/dev/null 2>&1 || true
+            endscript
+        }
+```
 
 # License
 

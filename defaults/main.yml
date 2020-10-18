@@ -6,46 +6,101 @@ aspects_logrotate_configs: {}
 aspects_logrotate_conf_file:
   000timeperiod:
     enabled: True
-    value: "weekly"
+    default: "weekly"
   001suusergroup:
     enabled: True
-    value: ""
-    Debian:
-      enabled: True
-      value: "su root syslog"
-    RedHat:
-      enabled: False
+    Ubuntu:
+      1604: "su root syslog"
+      1804: "su root syslog"
+      2004: "su root adm"
   002rotate:
     enabled: True
-    value: "rotate 4"
+    default: "rotate 4"
   003create:
     enabled: True
-    value: "create"
+    default: "create"
   004dateext:
     enabled: True
-    value: "dateext"
-  005compress:
-    enabled: False
-    value: "compress"
+    CentOS:
+      7: "dateext"
+    OracleLinux:
+      7: "dateext"
   006includedotd:
     enabled: True
-    value: "include /etc/logrotate.d"
+    default: "include /etc/logrotate.d"
   007varlogwtmp:
     enabled: True
-    value: |
-      /var/log/wtmp {
-        missingok
-        monthly
-        create 0664 root utmp
-            minsize 1M
-        rotate 1
-      }
-  008varlogbtmp:
-    enabled: True
-    value: |
-      /var/log/btmp {
-        missingok
-        monthly
-        create 0600 root utmp
-        rotate 1
-      }
+    Ubuntu:
+      1604: |
+        # no packages own wtmp and btmp -- we'll rotate them here
+        /var/log/wtmp {
+          missingok
+          monthly
+          create 0664 root utmp
+          rotate 1
+        }
+        /var/log/btmp {
+          missingok
+          monthly
+          create 0660 root utmp
+          rotate 1
+        }
+      1804: |
+        # no packages own wtmp and btmp -- we'll rotate them here
+        /var/log/wtmp {
+          missingok
+          monthly
+          create 0664 root utmp
+          rotate 1
+        }
+        /var/log/btmp {
+          missingok
+          monthly
+          create 0660 root utmp
+          rotate 1
+        }
+    Debian:
+      9: |
+        # no packages own wtmp and btmp -- we'll rotate them here
+        /var/log/wtmp {
+          missingok
+          monthly
+          create 0664 root utmp
+          rotate 1
+        }
+        /var/log/btmp {
+          missingok
+          monthly
+          create 0660 root utmp
+          rotate 1
+        }
+    CentOS:
+      7: |
+        # no packages own wtmp and btmp -- we'll rotate them here
+        /var/log/wtmp {
+          monthly
+          create 0664 root utmp
+          minsize 1M
+          rotate 1
+        }
+        /var/log/btmp {
+          missingok
+          monthly
+          create 0600 root utmp
+          rotate 1
+        }
+    OracleLinux:
+      7: |
+        # no packages own wtmp and btmp -- we'll rotate them here
+        /var/log/wtmp {
+          monthly
+          create 0664 root utmp
+          minsize 1M
+          rotate 1
+        }
+        /var/log/btmp {
+          missingok
+          monthly
+          create 0600 root utmp
+          rotate 1
+        }

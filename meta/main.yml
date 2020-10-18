@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: David Reagan
-  description: Create logrotate configuration files in /etc/logrotate.d/.
+  description: Manage logrotate configuration in `/etc/logrotate.conf` and `/etc/logrotate.d`.
   company: Lane Communtiy College
   license: MIT
   min_ansible_version: 2.8
@@ -13,9 +13,11 @@ galaxy_info:
     versions:
     - xenial
     - bionic
+    - focal
   - name: Debian
     versions:
     - stretch
+    - buster
   - name: OracleLinux
     versions:
     - 7
