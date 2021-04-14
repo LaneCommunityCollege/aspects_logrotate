@@ -1,0 +1,11 @@
+[Unit]
+Description=Rotation of log files
+Documentation=man:logrotate(8) man:logrotate.conf(5)
+
+[Timer]
+OnCalendar={{ aspects_logrotate_timer_OnCalendar | default('daily') }}
+AccuracySec={{ aspects_logrotate_timer_AccuracySec | default('12h') }}
+Persistent={{ aspects_logrotate_timer_Persistent | default('true') }}
+{{ aspects_logrotate_timer_other_settings | default('') }}
+[Install]
+WantedBy=timers.target

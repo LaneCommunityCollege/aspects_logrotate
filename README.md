@@ -25,8 +25,26 @@ Dictionary keys should be prefixed with a number to allow proper sorting.
 See [defaults/main.yml](defaults/main.yml) for examples. You can set a default value, or per
 distro and major version.
 
+### Configure systemd timer file
+#### aspects_logrotate_manage_timer
+Enable or disable management of the timer file. 
+Default: `False`
+To enable, set to `True`
+#### aspects_logrotate_timer_OnCalendar
+Default: `'daily'`
+Check SystemD docs for other possible values for the .timer files `OnCalendar` setting. 
+#### aspects_logrotate_timer_AccuracySec
+Default: `'12h'`
+Check SystemD docs for other possible values for the .timer  files `AccuracySec` setting.
+#### aspects_logrotate_timer_Persistent
+Default: `'true'`
+Check SystemD docs for other possible values for the .timer files `Persistent` setting. 
+
+#### aspects_logrotate_timer_other_settings
+Default: `''`
+Used to add extra settings to the `[timer]` section of the `.timer` file. Just add the full key and value lines.
+
 # Example Playbook
-Not that it's a good idea to overwrite the default syslog configuration, but it makes a good example.
 ```yaml
 - hosts: servers
   roles:
@@ -42,6 +60,9 @@ Not that it's a good idea to overwrite the default syslog configuration, but it 
           2004: "su root adm"
         CentOS:
           7: "su root loggroup"
+    aspects_logrotate_manage_timer: True
+    aspects_logrotate_timer_OnCalendar: 'hourly'
+    aspects_logrotate_timer_AccuracySec: '5m'
     aspects_logrotate_configs:
       syslog: |
         /var/log/syslog

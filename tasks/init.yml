@@ -19,3 +19,26 @@
   loop: "{{ aspects_logrotate_configs|dict2items }}"
   tags:
     - aspects_logrotate
+
+- name: Check if /usr/lib/systemd/system/logrotate.timer exists
+  when:
+    - aspects_logrotate_manage_timer
+  stat:
+    path: /usr/lib/systemd/system/logrotate.timer
+  register: inprocess_logrotate_timer
+  tags:
+    - aspects_logrotate
+
+- name: Template /usr/lib/systemd/system/logrotate.timer
+  when:
+    - inprocess_logrotate_timer.stat.exists
+    - aspects_logrotate_manage_timer
+  template:
+    src: "logrotate.timer.j2"
+    dest: "/usr/lib/systemd/system/logrotate.timer"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: "reload logrotate.timer"
+  tags:
+    - aspects_logrotate
