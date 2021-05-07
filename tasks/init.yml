@@ -12,11 +12,11 @@
 - name: Set logrotate rules
   template:
     src: "logrotaterules.j2"
-    dest: "/etc/logrotate.d/{{ item.key }}"
+    dest: "/etc/logrotate.d/{{ item.0 }}"
     owner: "root"
     group: "root"
     mode: "0644"
-  loop: "{{ aspects_logrotate_configs|dict2items }}"
+  loop: "{{ aspects_logrotate_configs | dictsort }}"
   tags:
     - aspects_logrotate
 
