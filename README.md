@@ -44,6 +44,9 @@ Check SystemD docs for other possible values for the .timer files `Persistent` s
 Default: `''`
 Used to add extra settings to the `[timer]` section of the `.timer` file. Just add the full key and value lines.
 
+### Configure hourly runs on non-SystemD timer systems
+Set `aspects_logrotate_run_hourly_cron` to `True`.
+
 # Example Playbook
 ```yaml
 - hosts: servers
@@ -55,7 +58,6 @@ Used to add extra settings to the `[timer]` section of the `.timer` file. Just a
       001suusergroup:
         enabled: True
         Ubuntu:
-          1604: "su root syslog"
           1804: "su root syslog"
           2004: "su root adm"
         CentOS:
@@ -63,12 +65,13 @@ Used to add extra settings to the `[timer]` section of the `.timer` file. Just a
     aspects_logrotate_manage_timer: True
     aspects_logrotate_timer_OnCalendar: 'hourly'
     aspects_logrotate_timer_AccuracySec: '5m'
+    aspects_logrotate_run_hourly_cron: True
     aspects_logrotate_configs:
       syslog: |
         /var/log/syslog
         {
             rotate 7
-            daily
+            hourly
             missingok
             notifempty
             delaycompress
