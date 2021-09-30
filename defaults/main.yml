@@ -12,7 +12,6 @@ aspects_logrotate_conf_file:
   001suusergroup:
     enabled: True
     Ubuntu:
-      1604: "su root syslog"
       1804: "su root syslog"
       2004: "su root adm"
   002rotate:
@@ -33,20 +32,6 @@ aspects_logrotate_conf_file:
   007varlogwtmp:
     enabled: True
     Ubuntu:
-      1604: |
-        # no packages own wtmp and btmp -- we'll rotate them here
-        /var/log/wtmp {
-          missingok
-          monthly
-          create 0664 root utmp
-          rotate 1
-        }
-        /var/log/btmp {
-          missingok
-          monthly
-          create 0660 root utmp
-          rotate 1
-        }
       1804: |
         # no packages own wtmp and btmp -- we'll rotate them here
         /var/log/wtmp {
