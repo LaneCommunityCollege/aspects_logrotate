@@ -42,3 +42,45 @@
   notify: "reload logrotate.timer"
   tags:
     - aspects_logrotate
+
+- name: Check if /etc/cron.daily/logrotate exists
+  when:
+    - aspects_logrotate_run_hourly_cron
+  stat:
+    path: /etc/cron.daily/logrotate
+  register: inprocess_logrotate_cron_daily
+  tags:
+    - aspects_logrotate
+
+- name: Copy /etc/cron.daily/logrotate to /etc/cron.hourly/logrotate
+  when:
+    - aspects_logrotate_run_hourly_cron
+    - inprocess_logrotate_cron_daily.stat.exists
+  copy:
+    remote_src: "yes"
+    src: "/etc/cron.daily/logrotate"
+    dest: "/etc/cron.hourly/logrotate"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  tags:
+    - aspects_logrotate
+
+- name: Check if /etc/cron.hourly/logrotate exists
+  when:
+    - aspects_logrotate_run_hourly_cron
+  stat:
+    path: /etc/cron.hourly/logrotate
+  register: inprocess_logrotate_cron_hourly
+  tags:
+    - aspects_logrotate
+
+- name: Remove /etc/cron.daily/logrotate
+  when:
+    - aspects_logrotate_run_hourly_cron
+    - inprocess_logrotate_cron_hourly.stat.exists
+  file:
+    state: "absent"
+    path: "/etc/cron.daily/logrotate"
+  tags:
+    - aspects_logrotate

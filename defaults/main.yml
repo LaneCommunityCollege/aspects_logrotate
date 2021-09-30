@@ -3,6 +3,7 @@
 aspects_logrotate_enabled: False
 aspects_logrotate_configs: {}
 aspects_logrotate_manage_timer: False
+aspects_logrotate_run_hourly_cron: False
 
 aspects_logrotate_conf_file:
   000timeperiod:
