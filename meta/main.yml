@@ -6,20 +6,20 @@ galaxy_info:
   license: MIT
   min_ansible_version: 2.10
   platforms:
-  - name: CentOS
-    versions:
-    - 7
-  - name: Ubuntu
-    versions:
-    - bionic
-    - focal
-  - name: Debian
-    versions:
-    - stretch
-    - buster
-  - name: OracleLinux
-    versions:
-    - 7
+    - name: CentOS
+      versions:
+        - 7
+    - name: Ubuntu
+      versions:
+        - bionic
+        - focal
+        - jammy
+    - name: Debian
+      versions:
+        - buster
+    - name: OracleLinux
+      versions:
+        - 7
   categories:
-  - system
-dependencies: []
+    - system
+dependencies: [ ]

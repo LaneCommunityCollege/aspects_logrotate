@@ -1,7 +1,7 @@
 ---
 # defaults file for aspects_logrotate
 aspects_logrotate_enabled: False
-aspects_logrotate_configs: {}
+aspects_logrotate_configs: { }
 aspects_logrotate_manage_timer: False
 aspects_logrotate_run_hourly_cron: False
 
@@ -14,6 +14,7 @@ aspects_logrotate_conf_file:
     Ubuntu:
       1804: "su root syslog"
       2004: "su root adm"
+      2204: "su root adm"
   002rotate:
     enabled: True
     default: "rotate 4"
@@ -46,8 +47,36 @@ aspects_logrotate_conf_file:
           create 0660 root utmp
           rotate 1
         }
+      2004: |
+        # no packages own wtmp and btmp -- we'll rotate them here
+        /var/log/wtmp {
+          missingok
+          monthly
+          create 0664 root utmp
+          rotate 1
+        }
+        /var/log/btmp {
+          missingok
+          monthly
+          create 0660 root utmp
+          rotate 1
+        }
+      2204: |
+        # no packages own wtmp and btmp -- we'll rotate them here
+        /var/log/wtmp {
+          missingok
+          monthly
+          create 0664 root utmp
+          rotate 1
+        }
+        /var/log/btmp {
+          missingok
+          monthly
+          create 0660 root utmp
+          rotate 1
+        }
     Debian:
-      9: |
+      10: |
         # no packages own wtmp and btmp -- we'll rotate them here
         /var/log/wtmp {
           missingok

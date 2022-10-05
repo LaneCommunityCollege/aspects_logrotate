@@ -1,14 +1,7 @@
 # {{ ansible_managed }}
 {% for item in aspects_logrotate_conf_file|dictsort(true,'key') %}
 {% if aspects_logrotate_conf_file[item[0]].enabled %}
-
 {% if
-    (ansible_lsb is defined and ansible_lsb.codename is defined and ansible_lsb.id is defined)
-    and (ansible_lsb.codename == "xenial" and (ansible_lsb.id == "Ubuntu" or ansible_lsb.id == "Pop"))
-    and (aspects_logrotate_conf_file[item[0]].Ubuntu is defined and aspects_logrotate_conf_file[item[0]].Ubuntu.1604 is defined)
--%}
-{{ aspects_logrotate_conf_file[item[0]].Ubuntu.1604 }}
-{% elif
     (ansible_lsb is defined and ansible_lsb.codename is defined and ansible_lsb.id is defined)
     and (ansible_lsb.codename == "bionic" and (ansible_lsb.id == "Ubuntu" or ansible_lsb.id == "Pop"))
     and (aspects_logrotate_conf_file[item[0]].Ubuntu is defined and aspects_logrotate_conf_file[item[0]].Ubuntu.1804 is defined)
@@ -22,10 +15,10 @@
 {{ aspects_logrotate_conf_file[item[0]].Ubuntu.2004 }}
 {% elif
     (ansible_lsb is defined and ansible_lsb.codename is defined and ansible_lsb.id is defined)
-    and (ansible_lsb.codename == "stretch" and ansible_lsb.id == "Debian")
-    and (aspects_logrotate_conf_file[item[0]].Debian is defined and aspects_logrotate_conf_file[item[0]].Debian.9 is defined)
+    and (ansible_lsb.codename == "jammy" and (ansible_lsb.id == "Ubuntu" or ansible_lsb.id == "Pop"))
+    and (aspects_logrotate_conf_file[item[0]].Ubuntu is defined and aspects_logrotate_conf_file[item[0]].Ubuntu.2204 is defined)
 -%}
-{{ aspects_logrotate_conf_file[item[0]].Debian.9 }}
+{{ aspects_logrotate_conf_file[item[0]].Ubuntu.2204 }}
 {% elif
     (ansible_lsb is defined and ansible_lsb.codename is defined and ansible_lsb.id is defined)
     and (ansible_lsb.codename == "buster" and ansible_lsb.id == "Debian")
