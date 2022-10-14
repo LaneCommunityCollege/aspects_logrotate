@@ -47,49 +47,10 @@ aspects_logrotate_conf_file:
           create 0660 root utmp
           rotate 1
         }
-      2004: |
-        # no packages own wtmp and btmp -- we'll rotate them here
-        /var/log/wtmp {
-          missingok
-          monthly
-          create 0664 root utmp
-          rotate 1
-        }
-        /var/log/btmp {
-          missingok
-          monthly
-          create 0660 root utmp
-          rotate 1
-        }
-      2204: |
-        # no packages own wtmp and btmp -- we'll rotate them here
-        /var/log/wtmp {
-          missingok
-          monthly
-          create 0664 root utmp
-          rotate 1
-        }
-        /var/log/btmp {
-          missingok
-          monthly
-          create 0660 root utmp
-          rotate 1
-        }
+      2004: ""
+      2204: ""
     Debian:
-      10: |
-        # no packages own wtmp and btmp -- we'll rotate them here
-        /var/log/wtmp {
-          missingok
-          monthly
-          create 0664 root utmp
-          rotate 1
-        }
-        /var/log/btmp {
-          missingok
-          monthly
-          create 0660 root utmp
-          rotate 1
-        }
+      10: ""
     CentOS:
       7: |
         # no packages own wtmp and btmp -- we'll rotate them here
