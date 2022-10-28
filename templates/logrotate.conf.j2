@@ -37,6 +37,18 @@
     and (aspects_logrotate_conf_file[item[0]].OracleLinux is defined and aspects_logrotate_conf_file[item[0]].OracleLinux.7 is defined)
 -%}
 {{ aspects_logrotate_conf_file[item[0]].OracleLinux.7 }}
+{% elif
+    (ansible_distribution is defined and ansible_distribution_major_version is defined)
+    and (ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "8")
+    and (aspects_logrotate_conf_file[item[0]].OracleLinux is defined and aspects_logrotate_conf_file[item[0]].OracleLinux.8 is defined)
+-%}
+{{ aspects_logrotate_conf_file[item[0]].OracleLinux.8 }}
+{% elif
+    (ansible_distribution is defined and ansible_distribution_major_version is defined)
+    and (ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "9")
+    and (aspects_logrotate_conf_file[item[0]].OracleLinux is defined and aspects_logrotate_conf_file[item[0]].OracleLinux.9 is defined)
+-%}
+{{ aspects_logrotate_conf_file[item[0]].OracleLinux.7 }}
 {% elif aspects_logrotate_conf_file[item[0]].default is defined -%}
 {{ aspects_logrotate_conf_file[item[0]].default }}
 {% endif %}
