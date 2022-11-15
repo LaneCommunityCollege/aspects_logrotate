@@ -31,7 +31,7 @@
 
 - name: Template /usr/lib/systemd/system/logrotate.timer
   when:
-    - inprocess_logrotate_timer.stat.exists
+    - inprocess_logrotate_timer.stat is defined and inprocess_logrotate_timer.stat.exists
     - aspects_logrotate_manage_timer
   template:
     src: "logrotate.timer.j2"
@@ -55,7 +55,7 @@
 - name: Copy /etc/cron.daily/logrotate to /etc/cron.hourly/logrotate
   when:
     - aspects_logrotate_run_hourly_cron
-    - inprocess_logrotate_cron_daily.stat.exists
+    - inprocess_logrotate_cron_daily.stat is defined and inprocess_logrotate_cron_daily.stat.exists
   copy:
     remote_src: "yes"
     src: "/etc/cron.daily/logrotate"
@@ -78,7 +78,7 @@
 - name: Remove /etc/cron.daily/logrotate
   when:
     - aspects_logrotate_run_hourly_cron
-    - inprocess_logrotate_cron_hourly.stat.exists
+    - inprocess_logrotate_cron_hourly.stat is defined and inprocess_logrotate_cron_hourly.stat.exists
   file:
     state: "absent"
     path: "/etc/cron.daily/logrotate"
