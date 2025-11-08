@@ -1,6 +1,6 @@
 ---
 - name: include init.yml
   when: aspects_logrotate_enabled
-  include: "init.yml"
+  include_tasks: "init.yml"
   tags:
-  - aspects_logrotate
+    - aspects_logrotate
